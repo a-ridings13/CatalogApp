@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Catalog</title>
+    <!--section for google oauth login script-->
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="//apis.google.com/js/platform.js?onload=start" async defer> </script>
+
+<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+    <script>
+      function start() {
+        gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                client_id: '16460646664-tbd4qbvev2pt4o28odr4r6uj3uvk2g5c.apps.googleusercontent.com',
+            });
+        });
+      }
+    </script>
+</head>
+<body>
+<script>
+
+</script>
+<div class="container">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{{url_for('catalog')}}">Catalog App</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <a href="{{url_for('showLogin')}}"><button class="btn btn-default btn-google" id="signinButton" >Sign In with Google</button></a>
+    </ul>
+  </div>
+</nav>
+</div>
+<div class="container">
+    <div id="content">
+        {% block content %}
+    <div class="">..</div>
+        {% endblock %}
+    </div>
+    <div id="footer">
+        {% block footer %}
+        <br>&copy; Copyright 2019 by <a href="https://austin-ridings.net/" target="_blank">Austin Ridings</a>
+        {% endblock %}
+    </div>
+    </div>
+</body>
+</html>

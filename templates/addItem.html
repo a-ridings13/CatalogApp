@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<header><a class="btn btn-default btn-lg btn-back" href="{{url_for('categoryItems', category_id=category_id)}}">Back</a> </header><h3>Add Item for {{ cat.name }}</h3>
+<form action="{{url_for('addItem', category_id=category_id)}}" method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" placeholder="Name..."><br><br>
+    <label for="desc">Description:</label><br>
+    <textarea id="desc" name="desc" placeholder="Description..."></textarea>
+    <input class="btn btn-default btn-lg btn-add" type="submit">
+</form>
+{%endblock%}

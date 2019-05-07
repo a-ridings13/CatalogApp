@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4">
+<h1>Categories</h1>
+{% for c in cats %}
+
+<a class="btn btn-default btn-lg btn-catalog" href="{{url_for('categoryItems', category_id = c.id)}}">{{ c.name }}</a><br>
+
+{% endfor %}
+</div>
+    <div class="col-md-8">
+<h1>Latest Items</h1>
+{% for i in items %}
+
+ <span>- {{ i.name }} ({{ i.category.name }})</span> <br><br>
+
+{% endfor %}
+    </div>
+</div>
+
+{%endblock%}

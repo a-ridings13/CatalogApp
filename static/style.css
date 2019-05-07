@@ -1,0 +1,83 @@
+#footer {
+    text-align: center;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+#content {
+    border-radius: 0;
+    background-color: lightgrey;
+    padding: 25px;
+}
+
+.btn-catalog {
+    width: 100%;
+    border-radius: 0;
+}
+
+.btn-catalog:hover {
+    background-color: lime;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+.btn-add {
+    float: right;
+}
+
+.btn-add:hover {
+    background-color: green;
+    color: white
+}
+
+.btn-item {
+    width: 45%;
+}
+
+.btn-delete:hover {
+    background-color: red;
+    color: white;
+}
+
+.btn-delete {
+    float: right;
+}
+
+.btn-back:hover {
+    background-color: #42c8f4;
+}
+
+.btn-back {
+    float: right;
+}
+
+.btn-edit:hover {
+    background-color: orange;
+}
+
+.fb-btn {
+    height: 20px;
+}
+
+.btn-update:hover {
+    background-color: #4aea3f;
+}
+
+.btn-del {
+    background-color: red;
+    color: white;
+}
+
+.btn-del:hover {
+    background-color: red;
+    color: white;
+}
+
+.btn-google {
+    background-color: #f93e44;
+    color: white;
+}

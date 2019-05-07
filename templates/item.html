@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header><a class="btn btn-default btn-lg btn-back" href="{{url_for('categoryItems', category_id=category_id)}}">Back</a> </header><br>
+<h1>{{ item.name }}</h1>
+<h4>Description: {{ item.description }}</h4>
+<a class="btn btn-default btn-lg btn-edit" href="{{url_for('editItem', item_id=item.id, category_id=category_id)}}">Edit Item</a>
+<a class="btn btn-default btn-lg btn-delete" href="{{url_for('deleteItem', item_id=item.id, category_id=category_id)}}">Delete Item</a>
+
+{%endblock%}
