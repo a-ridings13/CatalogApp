@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -12,21 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Catalog</title>
-    <!--section for google oauth login script-->
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-    <script src="//apis.google.com/js/platform.js?onload=start" async defer> </script>
 
-<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
-
-    <script>
-      function start() {
-        gapi.load('auth2', function() {
-            auth2 = gapi.auth2.init({
-                client_id: '16460646664-tbd4qbvev2pt4o28odr4r6uj3uvk2g5c.apps.googleusercontent.com',
-            });
-        });
-      }
-    </script>
 </head>
 <body>
 <script>
@@ -39,7 +24,11 @@
       <a class="navbar-brand" href="{{url_for('catalog')}}">Catalog App</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-        <a href="{{url_for('showLogin')}}"><button class="btn btn-default btn-google" id="signinButton" >Sign In with Google</button></a>
+        {% if not session.username %}
+        <li><a href="{{url_for('showLogin')}}"><button class="btn btn-default btn-google">Google Signin</button></a></li>
+        {% else %}
+        <li><a href="{{url_for('gdisconnect')}}"><button class="btn btn-warning">Logout</button></a></li>
+        {% endif %}
     </ul>
   </div>
 </nav>

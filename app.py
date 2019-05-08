@@ -125,11 +125,13 @@ def gdisconnect():
 
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return response
+        flash('%s' % response)
+        return redirect(url_for('catalog'))
     else:
         response = make_response(json.dumps('Failed to delete session and revoke token.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+
 
 #create a new user
 def createUser(login_session):
@@ -167,14 +169,21 @@ def categoryItems(category_id):
     cats = conn.query(Category).order_by(Category.id)
     items = conn.query(Category_Item).filter_by(category_id=category_id).all()
     itemcount = conn.query(Category_Item).filter_by(category_id=category_id).count()
-    return render_template('category.html', cat=cat, items=items, cats=cats, itemcount=itemcount)
+    if 'username' not in login_session:
+        return render_template('publicCategory.html', cat=cat, items=items, cats=cats, itemcount=itemcount)
+    else:
+        return render_template('category.html', cat=cat, items=items, cats=cats, itemcount=itemcount)
 
 
 @app.route('/catalog/<int:category_id>/<int:item_id>/info', methods=['GET', 'POST'])
 def categoryItem(category_id, item_id):
     item = conn.query(Category_Item).filter_by(id=item_id).one()
     cat = conn.query(Category).filter_by(id=category_id).one()
-    return render_template('item.html', item=item, cat=cat, category_id=category_id)
+    mine = getUserInfo(item.user_id)
+    if 'username' not in login_session or mine.id != login_session['user_id']:
+        return render_template('publicItem.html', item=item, cat=cat, category_id=category_id)
+    else:
+        return render_template('item.html', item=item, cat=cat, category_id=category_id)
 
 
 @app.route('/catalog/<int:category_id>/item/add', methods=['GET', 'POST'])
@@ -198,6 +207,11 @@ def editItem(category_id, item_id):
     itemUpdate = conn.query(Category_Item).filter_by(id=item_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    # if user does not own item, alert and redirect
+    if itemUpdate.user_id != login_session['user_id']:
+        return "<script>function alertUser() {alert('You are not " \
+               "authorized to make any edits to this item! Please create your own " \
+               "items to make changes!'); window.location = '/'}</script><body onload='alertUser()'>"
     if request.method == 'POST':
         if request.form['name'] and request.form['desc']:
             itemUpdate.name = request.form['name']
@@ -219,6 +233,11 @@ def deleteItem(category_id, item_id):
     itemToDelete = conn.query(Category_Item).filter_by(id=item_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    #if user does not own item, alert and redirect
+    if itemToDelete.user_id != login_session['user_id']:
+        return "<script>function alertUser() {alert('You are not " \
+               "authorized to delete this item! Please create your own " \
+               "items to delete!'); window.location = '/'}</script><body onload='alertUser()'>"
     if request.method == 'POST':
         conn.delete(itemToDelete)
         conn.commit()
