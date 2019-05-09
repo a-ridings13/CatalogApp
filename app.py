@@ -98,12 +98,6 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
-    # if user exists cool, else create a new user
-    user_id = getUserID(login_session['email'])
-    if not user_id:
-        user_id = createUser(login_session)
-    login_session['user_id'] = user_id
-
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -140,7 +134,7 @@ def gdisconnect():
 
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        success = 'Successfully logged out from the application!'
+        success = 'You have successfully disconnected from the application!'
         flash('%s' % success)
         return redirect(url_for('catalog'))
     else:
@@ -165,14 +159,6 @@ def createUser(login_session):
 def getUserInfo(user_id):
     user = conn.query(User).filter_by(id=user_id).one()
     return user
-
-
-def getUserID(email):
-    try:
-        user = conn.query(User).filter_by(email=email).one()
-        return user.id
-    finally:
-        None
 
 
 @app.route('/')
@@ -328,4 +314,4 @@ def categoryItemJSON(category_id, item_id):
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.debug = True
-    app.run(host='localhost', port=8000)
+    app.run(host='0.0.0.0', port=8000)
