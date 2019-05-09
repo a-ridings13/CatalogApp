@@ -140,7 +140,8 @@ def gdisconnect():
 
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        flash('%s' % response)
+        success = 'Successfully logged out from the application!'
+        flash('%s' % success)
         return redirect(url_for('catalog'))
     else:
         response = make_response(json.dumps('Failed to delete session '
@@ -327,4 +328,4 @@ def categoryItemJSON(category_id, item_id):
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='localhost', port=8000)

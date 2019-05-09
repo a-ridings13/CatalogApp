@@ -1,4 +1,3 @@
-
 # Catalog Application Project
 
 This is a python and flask web application to allow users to create items within categories and save them to an SQLite database, and also they can view other users Items that have been added. 
