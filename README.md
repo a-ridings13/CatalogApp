@@ -40,6 +40,6 @@ This application utilizes the flask framework and Googles oauth2 API to allow 3r
 ### Results:
     This will launch the application on your vagrant machine which you should be able to access via http://localhost:8000 or 0.0.0.0:8000
 
-    From here you will be able to browse around the application's categories and view items that are in the database. You will also be able to login to the application using your google account.
+    From here you will be able to browse around the application's categories and view items that are in the database. You will also be able to login to the application using your google account. **Please note:** To login using the google sign in you will need to be at the following URL: http://localhost:8000/login
 
     After you have logged in successfully you will be able to create, update, and delete items of your own.
