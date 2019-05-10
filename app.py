@@ -94,9 +94,14 @@ def gconnect():
     answer = requests.get(userinfo_url, params=params)
     data = json.loads(answer.text)
 
-    login_session['username'] = data['name']
-    login_session['picture'] = data['picture']
-    login_session['email'] = data['email']
+    login_session['username'] = data["name"]
+    login_session['picture'] = data["picture"]
+    login_session['email'] = data["email"]
+
+    user_id = getUserID(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
 
     output = ''
     output += '<h1>Welcome, '
@@ -144,6 +149,19 @@ def gdisconnect():
         return response
 
 
+def getUserID(email):
+    try:
+        user = conn.query(User).filter_by(email = email).one()
+        return user.id
+    except:
+        return None
+
+
+def getUserInfo(user_id):
+    user= conn.query(User).filter_by(id=user_id).one()
+    return user
+
+
 # create a new user
 def createUser(login_session):
     newUser = User(name=login_session['username'],
@@ -153,12 +171,6 @@ def createUser(login_session):
     conn.commit()
     user = conn.query(User).filter_by(email=login_session['email']).one()
     return user.id
-
-
-# grab user info from the database
-def getUserInfo(user_id):
-    user = conn.query(User).filter_by(id=user_id).one()
-    return user
 
 
 @app.route('/')
@@ -199,8 +211,8 @@ def categoryItems(category_id):
 def categoryItem(category_id, item_id):
     item = conn.query(Category_Item).filter_by(id=item_id).one()
     cat = conn.query(Category).filter_by(id=category_id).one()
-    mine = getUserInfo(item.user_id)
-    if 'username' not in login_session or mine.id != login_session['user_id']:
+    author = getUserInfo(item.user_id)
+    if 'username' not in login_session or author.id != login_session['user_id']:
         return render_template('publicItem.html',
                                item=item,
                                cat=cat,
