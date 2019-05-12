@@ -325,4 +325,4 @@ def categoryItemJSON(category_id, item_id):
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.debug = True
-    app.run(host='134.209.74.95', port=80)
+    app.run(True, port=80)
