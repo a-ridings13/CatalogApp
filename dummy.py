@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from database import Base, Category, Category_Item, User
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine('postgresql+psycopg2:///catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
